@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+  <title>Library</title>
+</head>
+<body>
+  <div class="container">
+    <div class="hero-header">
+      <div class="header">
+        <h1>Library</h1>
+      </div>
+      <div class="login">
+        <div>
+          <button id="login-btn" onclick="userLogin">Login</button>
+        </div>
+      </div>
+    </div>
+    <div class="add-main">
+      <div class="add-book-btn">
+        <label for="add-btn">Book that you would like to enter to Library</label>
+        <input type="button" id="add-btn" value="Add Book" onclick="formDisplay()">
+      </div>
+    </div> 
+    <div class="book-list-main">
+      <div>
+        <p>Here is the list when added</p>
+      </div>
+      <div class="book-shelf">
+        <div class="card">
+          <div>
+            <p>Book Title</p>
+          </div>
+          <div>
+            <p>Book Author</p>
+          </div>
+          <div>
+            <p>Pages: 12</p>
+          </div>
+          <div>
+            <p>Read/Not Read</p>
+          </div>
+        </div>
+        <!-- books added to DOM via JS  need grid style to be auto based on number of books-->
+      </div>
+    </div>
+  </div>
+  <div class="overlay-container">
+    <div class="div-book-form">
+      <form id="book-form" action="./index.html" method="post">
+        <h5>Add New Book</h5>
+        <div class="book-name">
+          <input type="text" id="bookName" name="book-name" placeholder="Title">
+        </div>
+        <div class="book-author">
+          <input type="text" id="author" name="book-author" placeholder="Author">
+        </div>
+        <div class="book-pages">
+          <input type="number" id="pages" name="book-pages" placeholder="Pages">
+        </div>
+        <div>
+          Have you Read it? 
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div>
+          <button type="submit" onclick="addBookToLib()">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+ 
+</body>
+</html>

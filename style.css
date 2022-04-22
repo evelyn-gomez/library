@@ -1,0 +1,68 @@
+* {
+  margin: 0px;
+  padding: 0px; 
+}
+
+body{
+  height: 100vh;
+}
+
+.container{
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ grid-template-rows: 2fr 1fr 5fr;
+}
+
+.hero-header{
+  grid-column: 1/3;
+  display:flex;
+  justify-content: space-between;
+  margin: 1%;
+}
+.add-main{
+  grid-row: 2/3; 
+  grid-column: 1/3
+}
+.book-list-main{
+  grid-row: 3/4;
+  grid-column: 1/3;
+}
+
+.book-shelf{
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1rem));
+  justify-items: center;
+}
+
+.div-book-form{
+  display: none;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 5%;
+  width: 300px;
+}
+
+#book-form{
+  display: grid;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.overlay-container{
+  display:none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.fadeIn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
