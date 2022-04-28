@@ -6,10 +6,11 @@
   --light-green: #9fff9c;
   --white: #fffbfb;
   --lighter-purple: rgb(241, 241, 241);
-
+  --btn-color:rgb(174 166 230);;
   --lg-font: 21px;
   
 }
+
 body{
   height: 100vh;
 }
@@ -22,6 +23,7 @@ body{
  background-color: var(--lighter-purple);
 }
 
+/* top header 1/3*/
 .hero-header{
   grid-column: 1/3;
   display:flex;
@@ -33,6 +35,7 @@ body{
   box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
 }
 
+/* middle container 2/3 */
 .add-main{
   grid-row: 2/3; 
   grid-column: 1/3;
@@ -41,6 +44,8 @@ body{
   align-items: center;
   font-size: var(--lg-font);
 }
+
+/* bottom container 3/3 */
 .book-list-main{
   grid-row: 3/4;
   grid-column: 1/3;
@@ -66,8 +71,18 @@ body{
   padding: 1rem;
   border-radius: 5%;
   gap: 11px;
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
+  align-content: space-around;
+}
+
+.card-div{
+  display:inline-flex;
+  width: inherit;
+}
+
+.card-div-p{
+  font-size:20px;
 }
 
 .div-book-form{
@@ -76,58 +91,84 @@ body{
   background-color: var(--lighter-purple);
   border-radius:5%;
   width: 300px;
-  height: 350px;
+  height: 370px;
 }
 
+/* FORM */
 #book-form{
   display: grid;
-  gap: 10px;
-  justify-content: center;
-  height: inherit;
+  gap: 20px;
   width: 100%;
-  align-content: space-evenly;
-  align-items: center;
-  justify-items: center;
 }
 
+/* Form Header Div */
+div#h5Div{
+  justify-content: center;
+}
+/* Header in FORM */
 h5{
   font-size: xx-large;
 }
+
+/* Form direct children */
 #book-form > div {
   width: inherit;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;;
 }
+
+
+
 
 #book-form > div >input {
   width: inherit;
-  height: 20%;
+  line-height: 40px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
 }
-
+/* font-size for form inputs and submit btn */
 .inputType > input, .inputType > button {
   font-size: 21px;
 }
+
+/* input type checkBox Div*/
+.divCheckbox {
+  display: flex;
+  position: relative;
+  align-items: center;
+}
+
+/* submit btn label*/
 label.switch {
   font-size: 20px;
   display: flex;
   align-items: center;
   gap: 1rem;
 }
+
+/* submit btn - input */
 input[type="checkbox"] {
   font-size: 20px;
   width: 20px;
   height: 20px;
 }
 
+/* submit btn main container*/
 .submit-div {
   display: inline-flex;
   justify-content: center;
 }
+
+/*submit btn*/
 #submitBtn{
   background-color: var(--light-green);
   padding: 10px;
   width: inherit;
   border-radius: 10px;
 }
-
+/*Parent container of form -- hidden initially*/
 .overlay-container{
   display:none;
   position: absolute;
@@ -138,10 +179,47 @@ input[type="checkbox"] {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+/* Added via JS to SHOW .overlay-container*/
 .fadeIn{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* via JS to display input validation errors */
+.error{
+  border: none; 
+  display: block;
+  color: red;
+  
+}
+
+.error-remove{
+  font-size: larger;
+  color: green;
+
+}
+
+.checklist {
+  width: inherit;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.inputType > input:focus{
+  outline:none;
+}
+
+.inputType > input:focus:invalid {
+  outline:none;
+  box-shadow: 0 0 1px 1px red;  
+}
+
+.inputType > input:valid{
+  box-shadow: 0 0 1px 2px green;
+  content:"\2713";
 }
 /* The switch - the box around the slider */
 /* .switch {
@@ -205,3 +283,6 @@ input:checked + .slider:before {
   border-radius: 50%
 } */
 
+footer{
+  display: block;
+}

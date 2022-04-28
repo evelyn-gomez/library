@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <script src="script.js" defer ></script>
   <title>Library</title>
 </head>
 <body>
@@ -23,7 +23,7 @@
     <div class="add-main">
       <div class="add-book-btn">
         <label for="add-btn">Book that you would like to enter to Library</label>
-        <input type="button" id="add-btn" value="Add Book" onclick="formDisplay()">
+        <input type="button" id="add-btn" value="Add Book" onclick="showForm()">
       </div>
     </div> 
     <div class="book-list-main">
@@ -38,22 +38,25 @@
   <div class="overlay-container">
     <div class="div-book-form">
       <form id="book-form"  method="post">
-        <div>
+        <div id="h5Div">
           <h5>Add New Book</h5> 
         </div>
         <div class="bookName inputType">
-          <input type="text" id="book-name" data-name name="book-name" placeholder="Title">
+          <input type="text" id="book-name" data-name name="book-name" placeholder="Title" required minlength="3" maxlength="25">
+          <div class="error"></div>
         </div>
         <div class="bookAuthor inputType">
-          <input type="text" id="book-author" data-author name="book-author" placeholder="Author">
+          <input type="text" id="book-author" data-author name="book-author" placeholder="Author" required minlength="3" maxlength="35">
+          <div class="error"></div>
         </div>
         <div class="bookPages inputType">
-          <input type="number" id="book-pages" data-pages name="book-pages" placeholder="Pages">
+          <input type="number" id="book-pages" data-pages name="book-pages" placeholder="Number of Pages" required minlength="1" maxlength="4" min="4">
+          <div class="error"></div>
         </div>
-        <div class="inputType">
-          <label class="switch">
+        <div class="inputType divCheckbox">
+          <label for="readCheckBox" class="switch" id="readLabel" >
             Have you Read it? 
-            <input type="checkbox">
+            <input type="checkbox" id="readCheckBox"> 
             <span class="slider round"></span>
           </label>
         </div>
@@ -63,6 +66,10 @@
       </form>
     </div>
   </div>
- 
 </body>
+<footer>
+  <div>
+    <p>THIS IS A FOOTER</p>
+  </div>
+</footer>
 </html>
