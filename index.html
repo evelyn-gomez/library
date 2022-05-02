@@ -5,37 +5,28 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/b876118324.js" crossorigin="anonymous"></script>
   <script src="script.js" defer ></script>
   <title>Library</title>
 </head>
 <body>
   <div class="container">
     <div class="hero-header">
-      <div class="header">
         <h1>Library</h1>
-      </div>
-      <div class="login">
+    </div>
+      <!-- <div class="login">
         <div>
           <button id="login-btn" onclick="userLogin">Login</button>
         </div>
-      </div>
+      </div> -->
+    <div class="add-book-btn">
+      <button id="add-btn" onclick="showForm()"> <span id="plusSign-btn">+ </span> New Book</button>
     </div>
-    <div class="add-main">
-      <div class="add-book-btn">
-        <label for="add-btn">Book that you would like to enter to Library</label>
-        <input type="button" id="add-btn" value="Add Book" onclick="showForm()">
-      </div>
-    </div> 
-    <div class="book-list-main">
-      <div class="library-list-header">
-        <p>Here is the list when added</p>
-      </div>
-      <div class="book-shelf">
-        <!-- books added to DOM via JS  need grid style to be auto based on number of books-->
-      </div>
+    <div class="book-shelf">
+      <!-- books added to DOM via JS  need grid style to be auto based on number of books-->
     </div>
   </div>
-  <div class="overlay-container">
+  <div class="overlay-container" >
     <div class="div-book-form">
       <form id="book-form"  method="post">
         <div id="h5Div">
@@ -53,23 +44,28 @@
           <input type="number" id="book-pages" data-pages name="book-pages" placeholder="Number of Pages" required minlength="1" maxlength="4" min="4">
           <div class="error"></div>
         </div>
-        <div class="inputType divCheckbox">
+        <div class="divCheckbox">
           <label for="readCheckBox" class="switch" id="readLabel" >
             Have you Read it? 
             <input type="checkbox" id="readCheckBox"> 
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="inputType submit-div">
+        <div class="submit-div">
           <button type="submit" id="submitBtn">Submit</button>
         </div>
       </form>
     </div>
   </div>
+  <footer>
+    <p>
+      <!-- <script>
+        document.write(new Date().getFullYear())
+      </script> -->
+    </p>
+    <a href="https://github.com/evelyn-gomez" target="_blank">
+      <i class="fa-brands fa-github"> </i>
+    </a>
+  </footer>
 </body>
-<footer>
-  <div>
-    <p>THIS IS A FOOTER</p>
-  </div>
-</footer>
 </html>
