@@ -251,9 +251,7 @@ window.onclick= function(event) {
  */
 // renderExisitingBooksInLibrary(); 
 
-// let TESTBOOK = new Book('test-title', 'test-author', 20, 'true');
 
-// addBookToBookShelf(TESTBOOK);
 
 
   
