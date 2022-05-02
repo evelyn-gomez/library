@@ -14,18 +14,6 @@ function hideForm(){
     bookFormContainer.classList.remove('fadeIn'); 
 };
 
-class Book {
-  constructor(name, author, pages, read) {
-    this.name = name,
-    this.author = author,
-    this.pages = pages,
-    this.read = read;
-  };
-};
-
-let userLibrary = [];
-let bookShelf = document.querySelector('.book-shelf'); 
-
 /**
  * 
  * @param {Array} userLibrary
@@ -51,6 +39,21 @@ let bookShelf = document.querySelector('.book-shelf');
  * @param {string} bookTitle 
  * @returns 
  */
+
+let userLibrary = [];
+let bookShelf = document.querySelector('.book-shelf'); 
+
+class Book {
+  constructor(name, author, pages, read) {
+    this.name = name,
+    this.author = author,
+    this.pages = pages,
+    this.read = read;
+  };
+  
+};
+
+
 function isBookInLibrary(bookTitle){
   //find if book title in library -- change to Lowercase
   if(userLibrary.find(book => book.name.toLowerCase() == bookTitle.toLowerCase())){ 
@@ -61,6 +64,73 @@ function isBookInLibrary(bookTitle){
     return false; 
   }
 }; 
+/**
+ * 
+ * @param {Element} div 
+ * @returns 
+ */
+function createDeleteBtn(div, book){
+  // create Delete Button 
+  let btnDelete = document.createElement('button');
+  btnDelete.classList.add('delete-btn');
+  div.appendChild(btnDelete);
+  btnDelete.textContent = 'DELETE';
+// add delete eventListener 
+  btnDelete.addEventListener('click', function(event){
+    let deleteparentdiv = event.target.parentNode; 
+    let mainCardParent = deleteparentdiv.parentNode;
+    let bookShelfParent = mainCardParent.parentNode; 
+
+    bookShelfParent.removeChild(mainCardParent); 
+    userLibrary.splice(userLibrary.find(index => index == book)); 
+
+  });
+};
+
+
+/**
+ * 
+ * @param {Object.property} readProperty 
+ * @param {Element} btn 
+ * @returns 
+ */
+function isBookRead(readProperty, btn){
+  btn.addEventListener('click', ()=>{
+    if(btn.innerHTML == 'READ'){
+      btn.classList.remove('card-read-yes');
+      btn.classList.add('card-read-no');
+      return btn.innerHTML = "NOT READ";
+    }else if(btn.innerHTML == 'NOT READ'){
+      btn.classList.remove('card-read-no');
+      btn.classList.add('card-read-yes');
+      return btn.innerHTML = "READ";
+    }
+  })
+    // change read to read/not read
+    if(readProperty == false){
+      btn.classList.add('card-read-no');
+      return btn.textContent = `NOT READ`;
+   }else{
+      btn.classList.add('card-read-yes');
+      return btn.textContent = 'READ';
+   }
+};
+
+/**
+ * 
+ * @returns removes class ".error" from errodDiv's of each Input
+ */
+ function removeError(){
+  let errorDiv = document.querySelectorAll('.error');
+  for (let error of errorDiv){  
+    if(error.textContent !== ''){
+      error.style.color = 'red'; 
+      error.textContent = ''; 
+    }  
+  }
+  return;
+  //do nothing 
+};
 
 /**
  * 
@@ -71,20 +141,20 @@ function addBookToBookShelf(book){
   let card = document.createElement('div');
   card.classList.add('card'); 
   bookShelf.appendChild(card); 
-  for(let property in book){
+  for(let property in book ){
     let div = document.createElement('div');
     div.classList.add('card-div')
     if(property == 'read'){
+      div.classList.add('btns-div');
       // create button for book.read property -- to be able to toggle later?  
       let btn = document.createElement('button');
+      btn.classList.add('read-btn');
       card.appendChild(div);
       div.appendChild(btn); 
-      // change read to read/not read
-      if(book[property] == false){
-        return btn.textContent = `NOT READ`;
-      }else{
-        return btn.textContent = 'READ';
-      }
+
+      isBookRead(book[property], btn);
+      createDeleteBtn(div, book);
+      return;
     }
     let para = document.createElement('p'); 
     para.classList.add('card-div-p');
@@ -115,24 +185,24 @@ form.addEventListener('submit',function(event){
     //add book to HTML bookShelf 
     addBookToBookShelf(newBook);   
   };
-  //remove form validation error class
-  for(let input of inputs){
-    let inputparent = input.parentElement;
-    let errorDiv = inputparent.querySelector('div.error-remove');
-    // errorDiv.classList.remove('error-remove'); 
-    // errorDiv.classList.add('error');
-    return errorDiv.textContent = ''; 
-  }
   //prevent form submitting to back end?/since no backend
   event.preventDefault();
   //removes FORM 
   hideForm();
+
   //reset default input values; 
   form.reset();
+  //remove form validation error class
+  removeError(); 
+
 });;  
 
+/**
+ * 
+ * @param {element} input 
+ * @returns type of error to errorDiv for Input
+ */
 function getError(input){
-  // let inputID = input.firstElementChild.attributes[1];
   let inputparent = input.parentElement;
   let errorDiv = inputparent.querySelector('.error');
   let inputName = input.placeholder; 
@@ -146,8 +216,7 @@ function getError(input){
   if(input.validity.valueMissing){
     return  errorDiv.textContent = `Please enter ${inputName} `;
   } else{
-    errorDiv.classList.remove('error');
-    errorDiv.classList.add('error-remove'); 
+    errorDiv.style.color = 'green'; 
     return errorDiv.textContent = '✓';
   }
   
@@ -160,13 +229,31 @@ for(let input of inputs){
     console.log(event.target);
     getError(event.target);
   })
+};
+
+
+
+
+/**
+ * removes overlayContainer, reset form and form error styling.  
+ * @param {Element} event 
+ * 
+ */
+window.onclick= function(event) {
+  if (event.target == overlayContainer) {
+    hideForm();
+    form.reset();
+    removeError(); 
+  }
 }
 /**
  * render exisiting books in userLibrary -- when page first loads. 
  */
 // renderExisitingBooksInLibrary(); 
 
+let TESTBOOK = new Book('test-title', 'test-author', 20, 'true');
 
+addBookToBookShelf(TESTBOOK);
 
 
   
