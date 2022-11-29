@@ -1,18 +1,18 @@
-//Container classes
-// let addBookBtn = document.querySelector('#add-btn');
+//Book and Library Container
 let bookFormContainer = document.querySelector('.div-book-form');
 let overlayContainer = document.querySelector('.overlay-container');
 
-function showForm(){
-  //onClick for addBookBtn, SHOW display form 
-  overlayContainer.classList.add('fadeIn');
-  bookFormContainer.classList.add('fadeIn');
-}; 
-
-function hideForm(){
+let FormAttributes =  {
+  showForm(){
+    overlayContainer.classList.add('fadeIn');
+    bookFormContainer.classList.add('fadeIn');
+    return;
+  },
+  hideForm(){
     overlayContainer.classList.remove('fadeIn');
     bookFormContainer.classList.remove('fadeIn'); 
-};
+  },
+}
 
 /**
  * 
@@ -41,6 +41,7 @@ function hideForm(){
  */
 
 let userLibrary = [];
+
 let bookShelf = document.querySelector('.book-shelf'); 
 
 class Book {
@@ -188,7 +189,7 @@ form.addEventListener('submit',function(event){
   //prevent form submitting to back end?/since no backend
   event.preventDefault();
   //removes FORM 
-  hideForm();
+  FormAttributes.hideForm();
 
   //reset default input values; 
   form.reset();
@@ -233,7 +234,6 @@ for(let input of inputs){
 
 
 
-
 /**
  * removes overlayContainer, reset form and form error styling.  
  * @param {Element} event 
@@ -241,7 +241,7 @@ for(let input of inputs){
  */
 window.onclick= function(event) {
   if (event.target == overlayContainer) {
-    hideForm();
+    FormAttributes.hideForm();
     form.reset();
     removeError(); 
   }
