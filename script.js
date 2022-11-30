@@ -1,8 +1,9 @@
 //Book and Library Container
 let bookFormContainer = document.querySelector('.div-book-form');
 let overlayContainer = document.querySelector('.overlay-container');
+let bookShelf = document.querySelector('.book-shelf'); 
 
-let FormAttributes =  {
+let formViews =  {
   showForm(){
     overlayContainer.classList.add('fadeIn');
     bookFormContainer.classList.add('fadeIn');
@@ -14,57 +15,43 @@ let FormAttributes =  {
   },
 }
 
-/**
- * 
- * @param {Array} userLibrary
- * Creates exisiting books in userLibrary and attaches to Bookshelf when first rendered. 
- */
-      // function renderExistingBooksInLibrary(userLibrary){
-      //   for(let book of userLibrary){
-      //     let card = document.createElement('div');
-      //     card.classList.add('card'); 
-      //     bookShelf.appendChild(card); 
-      //     for(let property in book){
-      //       console.log(property);
-      //       //need to add if case when property is read/ bc what to return a button not p tag
-      //       let cardPara = document.createElement('p');
-      //       card.appendChild(cardPara);  
-      //       cardPara.textContent = `${book[property]}`;
-      //     }
-      //   }
-      // }
-
-/**
- * check if book is in Library -- if yes, do not add to library. 
- * @param {string} bookTitle 
- * @returns 
- */
-
-let userLibrary = [];
-
-let bookShelf = document.querySelector('.book-shelf'); 
-
 class Book {
-  constructor(name, author, pages, read) {
-    this.name = name,
+  constructor(title, author, pages, read) {
+    this.title = title,
     this.author = author,
     this.pages = pages,
     this.read = read;
   };
-  
 };
 
-
-function isBookInLibrary(bookTitle){
-  //find if book title in library -- change to Lowercase
-  if(userLibrary.find(book => book.name.toLowerCase() == bookTitle.toLowerCase())){ 
-    //if found - return true
-    return true
-  }else{
-    console.log('book does not exist');
-    return false; 
+class Library {
+  constructor() {
+    this.books = []
   }
-}; 
+
+  addBook(newBook) {
+    if(!this.isBookInLibrary(newBook)){
+      this.books.push(newBook); 
+    }
+  }
+
+  removeBook(bookTitle) {
+    this.books = this.books.filter(book => book.title !== bookTitle)
+  }
+
+  isBookInLibrary(newBook){
+    if(this.books.find(book => book.title == newBook.title)){ 
+      return true; 
+    }else{
+      console.log('book does not exist');
+      return false; 
+    }
+  }; 
+
+}
+
+const library = new Library();
+
 /**
  * 
  * @param {Element} div 
@@ -133,6 +120,8 @@ function isBookRead(readProperty, btn){
   //do nothing 
 };
 
+
+
 /**
  * 
  * @param  {{name:String, author:String, pages:Number, read:Boolean}} book 
@@ -168,28 +157,36 @@ function addBookToBookShelf(book){
 //Form input tags
 let form = document.querySelector('form');
 
+class NewBookForm {
+  constructor(){
+    this.form_name = form_name; 
+  }
+
+  addTitle(){
+
+  }
+}
+
 form.addEventListener('submit',function(event){
-  let nameInput = document.querySelector('#book-name').value; 
+  let titleInput = document.querySelector('#book-name').value; 
   let authorInput = document.querySelector('#book-author').value;
   let pagesInput = document.querySelector('#book-pages').value;
   let readInput = document.querySelector('#readCheckBox'); 
 
-  let isInLibrary = isBookInLibrary(nameInput);
 
-  if(isInLibrary){
+  if(library.books.find(titleInput)){
     alert('this book is already in the library');
   }else{
     let newBook = new Book(nameInput, authorInput, pagesInput, readInput.checked);
-    //add book to library Array 
-    userLibrary.push(newBook); 
-    console.log(newBook);
+    //add book to library 
+    library.addBook(newBook); 
     //add book to HTML bookShelf 
     addBookToBookShelf(newBook);   
   };
   //prevent form submitting to back end?/since no backend
   event.preventDefault();
   //removes FORM 
-  FormAttributes.hideForm();
+  formViews.hideForm();
 
   //reset default input values; 
   form.reset();
@@ -241,16 +238,11 @@ for(let input of inputs){
  */
 window.onclick= function(event) {
   if (event.target == overlayContainer) {
-    FormAttributes.hideForm();
+    formViews.hideForm();
     form.reset();
     removeError(); 
   }
 }
-/**
- * render exisiting books in userLibrary -- when page first loads. 
- */
-// renderExisitingBooksInLibrary(); 
-
 
 
 
