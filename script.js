@@ -30,9 +30,8 @@ class Library {
   }
 
   addBook(newBook) {
-    if(!this.isBookInLibrary(newBook)){
-      this.books.push(newBook); 
-    }
+    this.books.push(newBook);
+    this._addBookToBookShelf(newBook); 
   }
 
   removeBook(bookTitle) {
@@ -48,6 +47,31 @@ class Library {
     }
   }; 
 
+  _addBookToBookShelf(newBook){
+    let card = document.createElement('div');
+    card.classList.add('card'); 
+    bookShelf.appendChild(card); 
+    for(let property in newBook ){
+      let div = document.createElement('div');
+      div.classList.add('card-div')
+      if(property == 'read'){
+        div.classList.add('btns-div');
+        // create button for book.read property -- to be able to toggle later?  
+        let btn = document.createElement('button');
+        btn.classList.add('read-btn');
+        card.appendChild(div);
+        div.appendChild(btn); 
+        isBookRead(newBook[property], btn);
+        createDeleteBtn(div, newBook);
+        return;
+      }
+      let para = document.createElement('p'); 
+      para.classList.add('card-div-p');
+      card.appendChild(div);  
+      div.appendChild(para); 
+      para.textContent = `${newBook[property]}`;
+    }
+  }
 }
 
 const library = new Library();
@@ -70,8 +94,7 @@ function createDeleteBtn(div, book){
     let bookShelfParent = mainCardParent.parentNode; 
 
     bookShelfParent.removeChild(mainCardParent); 
-    userLibrary.splice(userLibrary.find(index => index == book)); 
-
+    library.removeBook(book.title)
   });
 };
 
@@ -122,77 +145,30 @@ function isBookRead(readProperty, btn){
 
 
 
-/**
- * 
- * @param  {{name:String, author:String, pages:Number, read:Boolean}} book 
- * Create's a book and add's to Bookshelf --- need to enable toggleing read/notREAD ; 
- */
-function addBookToBookShelf(book){
-  let card = document.createElement('div');
-  card.classList.add('card'); 
-  bookShelf.appendChild(card); 
-  for(let property in book ){
-    let div = document.createElement('div');
-    div.classList.add('card-div')
-    if(property == 'read'){
-      div.classList.add('btns-div');
-      // create button for book.read property -- to be able to toggle later?  
-      let btn = document.createElement('button');
-      btn.classList.add('read-btn');
-      card.appendChild(div);
-      div.appendChild(btn); 
-
-      isBookRead(book[property], btn);
-      createDeleteBtn(div, book);
-      return;
-    }
-    let para = document.createElement('p'); 
-    para.classList.add('card-div-p');
-    card.appendChild(div);  
-    div.appendChild(para); 
-    para.textContent = `${book[property]}`;
-  }
-};
 
 //Form input tags
 let form = document.querySelector('form');
-
-class NewBookForm {
-  constructor(){
-    this.form_name = form_name; 
-  }
-
-  addTitle(){
-
-  }
-}
 
 form.addEventListener('submit',function(event){
   let titleInput = document.querySelector('#book-name').value; 
   let authorInput = document.querySelector('#book-author').value;
   let pagesInput = document.querySelector('#book-pages').value;
   let readInput = document.querySelector('#readCheckBox'); 
+  let book_template; 
 
-
-  if(library.books.find(titleInput)){
+  if(library.isBookInLibrary(titleInput)){
     alert('this book is already in the library');
   }else{
-    let newBook = new Book(nameInput, authorInput, pagesInput, readInput.checked);
-    //add book to library 
-    library.addBook(newBook); 
-    //add book to HTML bookShelf 
-    addBookToBookShelf(newBook);   
+    //create Book 
+    book_template = new Book(titleInput, authorInput, pagesInput,readInput)
+    //add to library 
+    library.addBook(book_template); 
   };
   //prevent form submitting to back end?/since no backend
   event.preventDefault();
-  //removes FORM 
   formViews.hideForm();
-
-  //reset default input values; 
   form.reset();
-  //remove form validation error class
   removeError(); 
-
 });;  
 
 /**
@@ -230,20 +206,10 @@ for(let input of inputs){
 };
 
 
-
-/**
- * removes overlayContainer, reset form and form error styling.  
- * @param {Element} event 
- * 
- */
 window.onclick= function(event) {
   if (event.target == overlayContainer) {
     formViews.hideForm();
     form.reset();
     removeError(); 
   }
-}
-
-
-
-  
+}; 
